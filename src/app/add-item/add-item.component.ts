@@ -14,6 +14,8 @@ export class AddItemComponent implements OnInit {
   addItemForm: FormGroup;
   submitted = false;
   items:Item[];
+  loading = false;
+  error = '';
 
   constructor(private formBuilder: FormBuilder,
               private addItemService: AddItemService,
@@ -27,17 +29,12 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(){
-
-    //this.addItemService.getAll()
-    //.subscribe(data=>{this.items=data;})
+    this.addItemService.getAll()
+    .subscribe(data=>{this.items=data;});
 
     this.addItemForm = this.formBuilder.group({
       description:['', Validators.required]
-    })
-
-
-
-
+    });
   }
 
   get f(){ return this.addItemForm.controls;}
@@ -51,14 +48,20 @@ export class AddItemComponent implements OnInit {
     this.addItemService.register(this.f.description.value)
     .subscribe(
           data => {
-              this.router.navigate(["/app-add-item"]);
-          }
+              this.router.navigate(['']);
 
+          },
+          error => {
+              this.error = 'Hubo un error';
+              this.loading = false;
+          });
 
-    )
   }
 
+  edit(item:Item):void{
+    localStorage.setItem("id", item.id.toString());
+    this.router.navigate(["app-modify-item"]);
 
-
+  }
 
 }

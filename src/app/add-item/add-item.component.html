@@ -1,10 +1,13 @@
 <div class="container">
   <h1>To-Do List</h1>
-  <!--<div>
-    <div *ngFor="let item of items">
-      <label>{{item.description}}</label>
-    </div>
-  </div>-->
+  <div>
+    <table>
+      <tr *ngFor="let item of items">
+        <td><label><input type="checkbox" id="{{item.id}}" value="{{item.description}}">{{item.description}}</label></td>
+        <td><button id="editButton" (click)="edit(item)">Edit</button></td>
+      </tr>
+
+    </table>
   <div>
     <form [formGroup]="addItemForm" (ngSubmit)="onSubmit(addItemForm.value)" #addItem="ngForm">
       <br>

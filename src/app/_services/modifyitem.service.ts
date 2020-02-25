@@ -5,14 +5,15 @@ import {environment as env} from '../environments/environment';
 import {Item} from '../item';
 
 @Injectable({ providedIn: 'root' })
-export class AddItemService {
+export class ModifyItemService {
   constructor(private http: HttpClient){}
 
-  getAll() {
-    return this.http.get<Item[]>(`${env.url}/itemsList`)
+  getItemId (id:number){
+    return this.http.get<Item[]>(`${env.url}/itemForId/`+ id);
   }
 
-  register(description: string){
-    return this.http.post<any>(`${env.url}/addItem`, {description})
+  modify(id:number, description: string){
+    return this.http.post<any>(`${env.url}/modifyItem`, {id, description})
   }
+
 }

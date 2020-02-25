@@ -1,15 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms'
-import {HttpClientModule} from '@angular/common/http'
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
-import{AddItemComponent} from './add-Item/add-item.component'
+import{AddItemComponent} from './add-Item/add-item.component';
+import{ModifyItemComponent} from './modify-item/modify-item.component';
 
 const appRoutes: Routes = [
-  { path:'app-add-item', component: AddItemComponent}
+  { path:'', redirectTo: 'app-add-item', pathMatch: 'full'},
+  { path:'app-add-item', component: AddItemComponent},
+  { path:'app-modify-item', component: ModifyItemComponent}
 
 
 ];
@@ -17,7 +20,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AddItemComponent
+    AddItemComponent,
+    ModifyItemComponent
   ],
   imports: [
     BrowserModule,

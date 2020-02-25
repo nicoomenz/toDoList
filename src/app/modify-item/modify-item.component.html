@@ -1,0 +1,13 @@
+<div class="container">
+  <h1>Editing Task "{{item.description}}"</h1>
+  <br>
+  <form>
+    <label for="description"></label>
+    <input [(ngModel)]="item.description" id="description" name="description" type="text" class="form-control">
+    <br>
+    <br>
+    <button (click)="save(item)" class="btn btn-success button-description">Save</button> &nbsp;
+    <button (click)="cancel()" class="btn btn-success button-description">Cancel</button>
+  </form>
+
+</div>

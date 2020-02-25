@@ -1,7 +1,12 @@
 export class Item {
-  constructor(public description: string){
+  id:number;
+  description:string;
+
+  constructor(description: string){
 
   }
+
+
 
 
 }
