@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Item} from '../item';
 import {Router, ActivatedRoute} from '@angular/router';
-import {AddItemService} from '../_services/additem.service';
+import {ItemControllerService} from '../_services/itemController.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -18,7 +18,7 @@ export class AddItemComponent implements OnInit {
   error = '';
 
   constructor(private formBuilder: FormBuilder,
-              private addItemService: AddItemService,
+              private itemControllerService: ItemControllerService,
               private route: ActivatedRoute,
               private router: Router){
 
@@ -29,11 +29,17 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.addItemService.getAll()
-    .subscribe(data=>{this.items=data;});
+    this.itemControllerService.refreshNeeded$
+    .subscribe(() => {
+      this.itemControllerService.getAll()
+      .subscribe(data=>{this.items=data;});
+    });
+
+    this.itemControllerService.getAll()
+      .subscribe(data=>{this.items=data;});
 
     this.addItemForm = this.formBuilder.group({
-      description:['', Validators.required]
+      description:['', Validators.pattern('[a-zA-Z0-9]*')]
     });
   }
 
@@ -45,10 +51,10 @@ export class AddItemComponent implements OnInit {
       return;
     }
 
-    this.addItemService.register(this.f.description.value)
+    this.itemControllerService.register(this.f.description.value)
     .subscribe(
           data => {
-              this.router.navigate(['']);
+            this.router.navigate([""]);
 
           },
           error => {
@@ -59,8 +65,16 @@ export class AddItemComponent implements OnInit {
   }
 
   edit(item:Item):void{
+
     localStorage.setItem("id", item.id.toString());
     this.router.navigate(["app-modify-item"]);
+
+
+  }
+
+  delete(item:Item):void{
+    this.itemControllerService.delete(item.id, item.description)
+    .subscribe(data => {this.items=this.items.filter(i=>i!==item)})
 
   }
 

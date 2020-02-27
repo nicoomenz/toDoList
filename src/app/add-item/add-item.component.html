@@ -5,6 +5,7 @@
       <tr *ngFor="let item of items">
         <td><label><input type="checkbox" id="{{item.id}}" value="{{item.description}}">{{item.description}}</label></td>
         <td><button id="editButton" (click)="edit(item)">Edit</button></td>
+        <td><button (click)="delete(item)">Delete</button></td>
       </tr>
 
     </table>
@@ -13,7 +14,7 @@
       <br>
       <div class="form-group">
         <label for="description"></label>
-        <input type="text" class="form-control" id="description" name="description" formControlName="description" required>
+        <input   type="text" class="form-control" id="description" name="description" formControlName="description" required>
         <button type="submit" id="button-description" class="btn btn-success">Add</button>
       </div>
 

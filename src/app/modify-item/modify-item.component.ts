@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Item} from '../item';
 import {Router} from '@angular/router';
 import {ModifyItemService} from '../_services/modifyitem.service';
-import { setTNodeAndViewData } from '@angular/core/src/render3/state';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-modify-item',
@@ -11,15 +11,23 @@ import { setTNodeAndViewData } from '@angular/core/src/render3/state';
 })
 export class ModifyItemComponent implements OnInit {
 
+  submitted = false;
   private item;
-  constructor(private modifyItemService: ModifyItemService,
+  modifyItemForm: FormGroup;
+  constructor(private formBuilder: FormBuilder,
+    private modifyItemService: ModifyItemService,
               private router: Router){
-
+                this.modifyItemForm = this.formBuilder.group({
+                  description:''
+              })
   }
 
   ngOnInit(){
       this.item = new Item('');
       this.editar(this.item);
+      this.modifyItemForm = this.formBuilder.group({
+        description:[this.item.description, Validators.pattern('[a-zA-Z0-9]*')]
+      });
   }
 
   editar(item: Item){
@@ -31,7 +39,11 @@ export class ModifyItemComponent implements OnInit {
   }
 
   save(itemsaved: Item){
-    console.log(itemsaved);
+    this.submitted = true;
+    if (this.modifyItemForm.invalid){
+      return;
+    }
+    console.log(this.item);
     this.modifyItemService.modify(itemsaved.id, itemsaved.description)
     .subscribe(data => {this.item=data; this.router.navigate(["app-add-item"]);})
 
