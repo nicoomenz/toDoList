@@ -30,7 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Ingresa el comando de instalación donde se encuentre el xampp. sudo ./xampp-linux-x64-7.2.9-0-installer.run
 
-mysqk -u root -p -h 127.0.0.1 | CREATE DATABASE todoitems
+mysqk -u root -p -h 127.0.0.1 | CREATE DATABASE todoitems | cd ../spring | chmod +x /spring | sudo service spring start
 
 cd "ruta de aplicacion" | ng serve
 
