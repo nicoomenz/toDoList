@@ -23,7 +23,7 @@ export class ModifyItemComponent implements OnInit {
   }
 
   ngOnInit(){
-      this.item = new Item('');
+      this.item = new Item('', 1);
       this.editar(this.item);
       this.modifyItemForm = this.formBuilder.group({
         description:[this.item.description, Validators.pattern('[a-zA-Z0-9]*')]

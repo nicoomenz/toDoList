@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Item} from '../item';
+import {FolderItem} from '../folderItem';
 import {Router, ActivatedRoute} from '@angular/router';
 import {ItemControllerService} from '../_services/itemController.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,9 +12,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddItemComponent implements OnInit {
 
+  idFolder:string;
   addItemForm: FormGroup;
   submitted = false;
   items:Item[];
+  private folder;
   loading = false;
   error = '';
 
@@ -29,13 +32,15 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit(){
+    this.idFolder=localStorage.getItem("idFolder");
+
     this.itemControllerService.refreshNeeded$
     .subscribe(() => {
-      this.itemControllerService.getAll()
+      this.itemControllerService.getAll(+this.idFolder)
       .subscribe(data=>{this.items=data;});
     });
 
-    this.itemControllerService.getAll()
+    this.itemControllerService.getAll(+this.idFolder)
       .subscribe(data=>{this.items=data;});
 
     this.addItemForm = this.formBuilder.group({
@@ -51,10 +56,10 @@ export class AddItemComponent implements OnInit {
       return;
     }
 
-    this.itemControllerService.register(this.f.description.value)
+    this.itemControllerService.register(this.f.description.value, +this.idFolder)
     .subscribe(
           data => {
-            this.router.navigate([""]);
+            this.router.navigate(["app-add-item"]);
 
           },
           error => {
@@ -69,13 +74,18 @@ export class AddItemComponent implements OnInit {
     localStorage.setItem("id", item.id.toString());
     this.router.navigate(["app-modify-item"]);
 
-
   }
 
   delete(item:Item):void{
-    this.itemControllerService.delete(item.id, item.description)
+    this.folder = new FolderItem('',+this.idFolder);
+    this.itemControllerService.delete(item.id, item.description, this.folder)
     .subscribe(data => {this.items=this.items.filter(i=>i!==item)})
 
   }
+
+  home(){
+    this.router.navigate(["app-folder-item"]);
+  }
+
 
 }

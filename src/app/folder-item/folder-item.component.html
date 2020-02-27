@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Folders</h1>
+  <div>
+    <table>
+      <tr *ngFor="let folder of folders">
+        <td><label  id="{{folder.id}}" >- {{folder.description}}</label></td>
+        <td><button id="editButton" (click)="viewItems(folder)">View Items</button></td>
+        <td><button id="editButton" (click)="edit(folder)">Edit</button></td>
+        <td><button (click)="delete(folder)">Delete</button></td>
+      </tr>
+
+    </table>
+  <div>
+    <form [formGroup]="addFolderItemForm" (ngSubmit)="onSubmit(addFolderItemForm.value)" #addItem="ngForm">
+      <br>
+      <div class="form-group">
+        <label for="folderDescription"></label>
+        <input   type="text" class="form-control" id="description" name="folderDescription" formControlName="description" required>
+        <button type="submit" id="button-description" class="btn btn-success">Add</button>
+      </div>
+
+    </form>
+  </div>
+
+
+</div>
+
+
+

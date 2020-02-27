@@ -1,0 +1,13 @@
+<div class="container">
+  <h1>Editing Task "{{folder.description}}"</h1>
+  <br>
+  <form [formGroup]="modifyFolderForm" (ngSubmit)="save(folder)" #modifyItem="ngForm">
+    <label for="descriptionFolderModify"></label>
+    <input [(ngModel)]="folder.description" id="description" name="descriptionFolderModify" type="text" class="form-control" formControlName="description" required>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-success button-description">Save</button> &nbsp;
+    <button (click)="cancel()" class="btn btn-success button-description">Cancel</button>
+  </form>
+
+</div>

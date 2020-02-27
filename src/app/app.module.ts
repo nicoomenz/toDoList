@@ -8,12 +8,15 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import{AddItemComponent} from './add-Item/add-item.component';
 import{ModifyItemComponent} from './modify-item/modify-item.component';
+import { FolderItemComponent } from './folder-item/folder-item.component';
+import { ModifyFolderItemComponent } from './modify-folder-item/modify-folder-item.component';
 
 const appRoutes: Routes = [
-  { path:'', redirectTo: 'app-add-item', pathMatch: 'full'},
+  { path:'', redirectTo: 'app-folder-item', pathMatch: 'full'},
+  { path:'app-folder-item', component: FolderItemComponent},
   { path:'app-add-item', component: AddItemComponent},
-  { path:'app-modify-item', component: ModifyItemComponent}
-
+  { path:'app-modify-item', component: ModifyItemComponent},
+  { path:'app-modifyFolder-item', component: ModifyFolderItemComponent}
 
 ];
 
@@ -21,7 +24,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AddItemComponent,
-    ModifyItemComponent
+    ModifyItemComponent,
+    FolderItemComponent,
+    ModifyFolderItemComponent
   ],
   imports: [
     BrowserModule,
